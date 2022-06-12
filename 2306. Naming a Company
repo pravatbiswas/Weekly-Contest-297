@@ -1,0 +1,17 @@
+from collections import defaultdict
+from itertools import combinations
+class Solution(object):
+    def distinctNames(self, ideas):
+        d = defaultdict(set)
+        for w in ideas:
+            d[w[0]].add(w[1:])
+        r = 0
+        for a, b in combinations(d, 2):
+            d1 = d[a]
+            d2 = d[b]
+            if len(d1) > len(d2):
+                d1, d2 = d2, d1
+            overlap = sum(1 for w in d1 if w in d2)
+            r += (len(d1) - overlap) * (len(d2) - overlap)
+        return 2 * r
+        
