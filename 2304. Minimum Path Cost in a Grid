@@ -7,7 +7,7 @@ class Solution(object):
         for i in range(1, m): #since first layer already stored in f, starting from 1
             ff = [float('inf')]*n #initializing a temp layer ff with maximum posible value, since our goal is to find minimum possible value to reach that layer
             for j in range(n): #traversing through all the columns
-                for k in range(n): 
+                for k in range(n): #for each column of a given row, checking the minimum value of previous row though which this column can be reached.
                     ff[k] = min(ff[k], f[j] + moveCost[a[i-1][j]][k] + a[i][k]) #checking for the minimum possible value to reach that ith layer.
             f = ff
         return min(f)
