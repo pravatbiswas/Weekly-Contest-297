@@ -1,19 +1,22 @@
+# Here we will be using backTracking and will consider every possible choices
 class Solution(object):
     def distributeCookies(self, cookies, k):
         a = cookies
-        t = [0] * k
-        r = [sum(a)]
+        t = [0] * k #k child's value will be stored here; initially all value is set to 0
+        r = [sum(a)] #maximum value one child can get
         def _search(pos, used):
-            if pos == len(a):
-                r[0] = min(r[0], max(t))
+            if pos == len(a): 
+                r[0] = min(r[0], max(t)) #when we reached the end of the cookies, r[0] is set to min(r[0], max(t)); r[0] was initially set to maximum value, 
+                                         hence it will take max(t) if it is less than r[0]; and then it simply return
                 return
-            for i in xrange(used):
-                t[i] += a[pos]
-                _search(pos+1, used)
-                t[i] -= a[pos]
-            if used < k:
-                t[used] += a[pos]
-                _search(pos+1, used+1)
-                t[used] -= a[pos]
-        _search(0, 0)
-        return r[0]
+            for i in range(used): #traversing for every child we can take either take the position in consideration or we can ignore it and move on
+                t[i] += a[pos] #taking pos in consideration
+                _search(pos+1, used) #incrementing pos to take other pos in consideration for users/childs
+                t[i] -= a[pos] #removing pos from consideration
+            if used < k: # when all childs are not yet considered i.e. some childs have not received any cookies yet
+                t[used] += a[pos] #taking pos in consideration for that child 
+                _search(pos+1, used+1) #incrementing pos and used to take other pos and child in consideration as some childs have not received any cookies yet;
+                                       condition checked in that if statement         
+                t[used] -= a[pos]     #removing pos from consideration
+        _search(0, 0) #initial value of pos and used is 0
+        return r[0] #final result
