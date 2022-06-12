@@ -1,0 +1,14 @@
+class Solution:
+    def calculateTax(self, brackets: List[List[int]], income: int) -> float:
+        prev = 0
+        res = 0
+        for a, b in brackets:
+            temp = a
+            a = min(a, income)
+            if (a - prev) < 0:
+                return res
+            res += (a - prev)*(b / 100)
+            prev = temp
+        return res
+            
+        
