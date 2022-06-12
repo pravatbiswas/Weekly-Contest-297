@@ -1,0 +1,19 @@
+class Solution(object):
+    def distributeCookies(self, cookies, k):
+        a = cookies
+        t = [0] * k
+        r = [sum(a)]
+        def _search(pos, used):
+            if pos == len(a):
+                r[0] = min(r[0], max(t))
+                return
+            for i in xrange(used):
+                t[i] += a[pos]
+                _search(pos+1, used)
+                t[i] -= a[pos]
+            if used < k:
+                t[used] += a[pos]
+                _search(pos+1, used+1)
+                t[used] -= a[pos]
+        _search(0, 0)
+        return r[0]
