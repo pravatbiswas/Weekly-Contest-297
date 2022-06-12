@@ -1,0 +1,13 @@
+class Solution(object):
+    def minPathCost(self, grid, moveCost):
+        a = grid
+        m = len(a)
+        n = len(a[0])
+        f = a[0][:]
+        for i in xrange(1, m):
+            ff = [float('inf')]*n
+            for j in xrange(n):
+                for k in xrange(n):
+                    ff[k] = min(ff[k], f[j] + moveCost[a[i-1][j]][k] + a[i][k])
+            f = ff
+        return min(f)
